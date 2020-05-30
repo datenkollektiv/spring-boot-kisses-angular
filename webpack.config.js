@@ -1,5 +1,4 @@
 const webpack = require("webpack");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var path = require('path');
@@ -51,10 +50,6 @@ module.exports = {
 			/\@angular(\\|\/)core(\\|\/)fesm5/,
 			path.resolve(__dirname, 'src')
 		)
-		// new CopyWebpackPlugin([ {
-    		// from : 'src/app/assets',
-    		// to : 'assets'}]
-		// )
 	]
 }
 
