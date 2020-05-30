@@ -24,7 +24,7 @@ def generatedResources = "src/generated/resources"
 
 sourceSets {
     main {
-        output.dir(generatedResources, builtBy: 'webpack')
+        output.dir(generatedResources, builtBy: 'ngBuild')
     }
 }
 
@@ -34,22 +34,21 @@ node {
     download = true
 }
 
-task webpack(type: NodeTask, dependsOn: 'npmInstall') {
-    script = project.file('node_modules/webpack/bin/webpack.js')
-    args = ['--display-error-details']
-}
-
-task serve(type: NodeTask, dependsOn: 'webpack') {
-    script = project.file('node_modules/webpack-dev-server/bin/webpack-dev-server.js')
-    args = ['--content-base', generatedResources,
-            '--host', '0.0.0.0']
-}
-
 task audit(type: NpmTask, dependsOn: 'npmInstall') {
     args = ['audit']
 }
 
-processResources.dependsOn 'webpack'
+task ngBuild(type: NodeTask, dependsOn: 'npmInstall') {
+    script = project.file('node_modules/@angular/cli/bin/ng')
+    args = ['build', '--prod']
+}
+
+task ngServe(type: NodeTask, dependsOn: 'npmInstall') {
+    script = project.file('node_modules/@angular/cli/bin/ng')
+    args = ['serve', '--open']
+}
+
+processResources.dependsOn 'ngBuild'
 
 clean.delete << file('node_modules')
 clean.delete << file(generatedResources)
