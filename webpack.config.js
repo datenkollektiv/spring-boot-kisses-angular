@@ -46,6 +46,11 @@ module.exports = {
             /angular(\\|\/)core(\\|\/)@angular/,
             root('./src'), // location of your src
             {}),
+		// workaround for warning: Critical dependency: the request of a dependency is an expression
+		new webpack.ContextReplacementPlugin(
+			/\@angular(\\|\/)core(\\|\/)fesm5/,
+			path.resolve(__dirname, 'src')
+		)
 		// new CopyWebpackPlugin([ {
     		// from : 'src/app/assets',
     		// to : 'assets'}]
