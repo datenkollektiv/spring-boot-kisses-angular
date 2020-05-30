@@ -1,4 +1,4 @@
-package example;
+package de.datenkollektiv.examples.springframework.boot.angular;
 
 import java.time.Instant;
 

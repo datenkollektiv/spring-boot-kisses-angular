@@ -1,4 +1,4 @@
-package example;
+package de.datenkollektiv.examples.springframework.boot.angular;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
