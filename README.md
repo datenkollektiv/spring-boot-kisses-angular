@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/fwaibel/spring-boot-kisses-angular.svg?branch=master)](https://travis-ci.org/fwaibel/spring-boot-kisses-angular)
+[![Last Commit](https://img.shields.io/github/last-commit/datenkollektiv/spring-boot-kisses-angular?style=flat)](https://github.com/datenkollektiv/spring-boot-kisses-angular/commits/)
+[![Build Status](https://circleci.com/gh/datenkollektiv/spring-boot-kisses-angular.svg?style=shield)](https://circleci.com/gh/datenkollektiv/spring-boot-kisses-angular)
 
 # Spring Boot kisses Angular 4
 
