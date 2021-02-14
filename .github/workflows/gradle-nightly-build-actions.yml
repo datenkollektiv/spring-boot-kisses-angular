@@ -27,5 +27,5 @@ jobs:
           release_id: 36819550
           asset_path: ./build/libs/spring-boot-kisses-angular-0.4.0.jar
           asset_name: spring-boot-kisses-angular-nightly-$$.jar
-          asset_content_type: application/zip
+          asset_content_type: application/java-archive
           max_releases: 7
