@@ -1,6 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '2.3.0.RELEASE'
     id "com.github.node-gradle.node" version "2.2.4"
+
+    id "com.google.cloud.tools.jib" version "2.7.1"
 }
 
 apply plugin: 'java'
@@ -49,6 +51,28 @@ task ngServe(type: NodeTask, dependsOn: 'npmInstall') {
 }
 
 processResources.dependsOn 'ngBuild'
+
+jibDockerBuild.dependsOn 'processResources'
+
+jib {
+    to {
+        image = 'datenkollektiv/spring-boot-kisses-angular'
+        tags = ['latest', project.version]
+    }
+    container {
+        appRoot = '/app'
+        ports = ['8080']
+        workingDirectory = '/app'
+    }
+    extraDirectories {
+        paths {
+            path {
+                from = file(generatedResources)
+                into = '/app'
+            }
+        }
+    }
+}
 
 clean.delete << file('node_modules')
 clean.delete << file(generatedResources)

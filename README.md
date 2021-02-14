@@ -12,3 +12,18 @@ This repo is a companion of
 * [Migrating from Angular HttpModule to new Angular 4.3 HttpClientModule](https://devops.datenkollektiv.de/migrating-from-angular-httpmodule-to-new-angular-43-httpclientmodule.html)
 
 > Note: The [Online Spring Boot Banner Generator](https://devops.datenkollektiv.de/banner.txt/index.html) has emerged from this template...please have a look at [Create Your Own Spring Boot Banner](https://devops.datenkollektiv.de/create-your-own-spring-boot-banner.html) for more details.
+
+## Build Docker/OCI image
+
+```sh
+gradle jibDockerBuild
+```
+
+> Note: This command requires a Docker daemon to be present locally.
+> For other options please refer to the [Gradle](https://gradle.org/) plugin [GoogleContainerTools/jib](https://github.com/GoogleContainerTools/jib)
+
+```sh
+docker run -it -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.4.0
+```
+
+Point your browser to [http://localhost:8080/app/index.htm](http://localhost:8080/app/index.htm) to access app `42`.
