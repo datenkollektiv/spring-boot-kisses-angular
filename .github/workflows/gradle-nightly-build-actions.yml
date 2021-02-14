@@ -1,7 +1,6 @@
 name: Java CI Nightly Build
-on:
-  schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC
+
+on: [push]
 
 jobs:
   build:
