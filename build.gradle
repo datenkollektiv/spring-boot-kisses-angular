@@ -36,7 +36,7 @@ node {
     download = true
 }
 
-task audit(type: NpmTask, dependsOn: 'npmInstall') {
+task npmAudit(type: NpmTask, dependsOn: 'npmInstall') {
     args = ['audit']
 }
 
@@ -57,7 +57,7 @@ jibDockerBuild.dependsOn 'processResources'
 jib {
     to {
         image = 'datenkollektiv/spring-boot-kisses-angular'
-        tags = ['latest', project.version]
+        tags = ['latest', project.version] as List<String>
     }
     container {
         appRoot = '/app'
