@@ -8,7 +8,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
-version = '0.5.1'
+version = '0.5.2'
 
 repositories {
     mavenCentral()
@@ -49,12 +49,17 @@ task npmAuditFix(type: NpmTask, dependsOn: 'npmInstall') {
 
 task ngBuild(type: NodeTask, dependsOn: 'npmInstall') {
     script = project.file('node_modules/@angular/cli/bin/ng')
-    args = ['build', '--prod']
+    args = ['build', '--configuration', 'production']
 }
 
 task ngServe(type: NodeTask, dependsOn: 'npmInstall') {
     script = project.file('node_modules/@angular/cli/bin/ng')
     args = ['serve', '--open']
+}
+
+task ngUpdate(type: NodeTask, dependsOn: 'npmInstall') {
+    script = project.file('node_modules/@angular/cli/bin/ng')
+    args = ['update']
 }
 
 processResources.dependsOn 'ngBuild'
