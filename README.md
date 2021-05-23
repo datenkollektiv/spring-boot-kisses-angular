@@ -23,7 +23,7 @@ gradle jibDockerBuild
 > For other options please refer to the [Gradle](https://gradle.org/) plugin [GoogleContainerTools/jib](https://github.com/GoogleContainerTools/jib)
 
 ```sh
-docker run -it -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.4.0
+docker run -it --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.2
 ```
 
 Point your browser to [http://localhost:8080/app/index.htm](http://localhost:8080/app/index.htm) to access app `42`.

@@ -9,8 +9,8 @@
     "@angular/platform-browser": "12.0.1",
     "@angular/platform-browser-dynamic": "12.0.1",
     "core-js": "3.6.5",
-    "rxjs": "6.5.5",
-    "tslib": "1.13.0",
+    "rxjs": "6.6.7",
+    "tslib": "1.14.1",
     "zone.js": "0.11.4"
   },
   "devDependencies": {
