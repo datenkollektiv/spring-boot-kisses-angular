@@ -13,7 +13,7 @@ This repo is a companion of
 
 > Note: The [Online Spring Boot Banner Generator](https://devops.datenkollektiv.de/banner.txt/index.html) has emerged from this template...please have a look at [Create Your Own Spring Boot Banner](https://devops.datenkollektiv.de/create-your-own-spring-boot-banner.html) for more details.
 
-## Build Docker/OCI image
+## Build Docker/OCI image locally
 
 ```sh
 gradle jibDockerBuild
@@ -23,7 +23,7 @@ gradle jibDockerBuild
 > For other options please refer to the [Gradle](https://gradle.org/) plugin [GoogleContainerTools/jib](https://github.com/GoogleContainerTools/jib)
 
 ```sh
-docker run -it --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.3
+docker run -it --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.5
 ```
 
 Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access app `42`.

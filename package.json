@@ -1,6 +1,6 @@
 {
   "name": "spring-boot-kisses-angular",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "private": true,
   "dependencies": {
     "@angular/common": "12.0.5",
