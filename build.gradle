@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.6'
 
     // https://plugins.gradle.org/search?term=com.github.node-gradle.node
-    id "com.github.node-gradle.node" version "3.1.1"
+    id "com.github.node-gradle.node" version "3.2.1"
 
     // https://plugins.gradle.org/search?term=com.google.cloud.tools.jib
     id "com.google.cloud.tools.jib" version "3.1.4"
@@ -51,14 +51,14 @@ task npmAuditFix(type: NpmTask, dependsOn: 'npmInstall') {
     args = ['audit', 'fix']
 }
 
-task ngBuild(type: NodeTask, dependsOn: 'npmInstall') {
-    script = project.file('node_modules/@angular/cli/bin/ng')
+task ngBuild(type: NpxTask, dependsOn: 'npmInstall') {
+    command = '@angular/cli@13.3.3'
     args = ['build', '--configuration', 'production']
 }
 
-task ngServe(type: NodeTask, dependsOn: 'ngBuild') {
-    script = project.file('node_modules/@angular/cli/bin/ng')
-    args = ['serve', '--open']
+task ngServeProduction(type: NpxTask, dependsOn: 'ngBuild') {
+    command = '@angular/cli@13.3.3'
+    args = ['serve', '--open', '--configuration=production' ]
 }
 
 task ngUpdate(type: NodeTask, dependsOn: 'npmInstall') {
