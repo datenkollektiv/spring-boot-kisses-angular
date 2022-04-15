@@ -38,7 +38,8 @@ sourceSets {
 }
 
 node {
-    version = '14.18.2'
+    // https://nodejs.org/en/about/releases/
+    version = '14.19.1'
     download = true
 }
 
