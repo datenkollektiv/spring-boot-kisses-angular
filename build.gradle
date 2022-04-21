@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.6'
+    id 'org.springframework.boot' version '2.6.7'
 
     // https://plugins.gradle.org/search?term=com.github.node-gradle.node
     id "com.github.node-gradle.node" version "3.2.1"
