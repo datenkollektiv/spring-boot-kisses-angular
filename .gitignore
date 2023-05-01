@@ -25,6 +25,4 @@ build/
 node_modules/
 /src/generated/resources
 
-package-lock.json
 spring-boot-kisses-angular.code-workspace
-
