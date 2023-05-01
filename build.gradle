@@ -11,7 +11,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
-version = '0.5.5'
+version = '0.5.14'
 
 repositories {
     mavenCentral()
@@ -43,27 +43,32 @@ node {
     download = true
 }
 
-task npmAudit(type: NpmTask, dependsOn: 'npmInstall') {
+tasks.register('npmAudit', NpmTask) {
+    dependsOn(npmInstall)
     args = ['audit']
 }
 
-task npmAuditFix(type: NpmTask, dependsOn: 'npmInstall') {
+tasks.register('npmAuditFix', NpmTask) {
+    dependsOn(npmInstall)
     args = ['audit', 'fix']
 }
 
-task ngBuild(type: NpxTask, dependsOn: 'npmInstall') {
-    command = '@angular/cli@13.3.3'
+tasks.register('ngBuild', NpxTask) {
+    dependsOn(npmInstall)
+    command = '@angular/cli'
     args = ['build', '--configuration', 'production']
 }
 
-task ngServeProduction(type: NpxTask, dependsOn: 'ngBuild') {
-    command = '@angular/cli@13.3.3'
+tasks.register('ngServeProduction', NpxTask) {
+    dependsOn('ngBuild')
+    command = '@angular/cli'
     args = ['serve', '--open', '--configuration=production' ]
 }
 
-task ngUpdate(type: NodeTask, dependsOn: 'npmInstall') {
-    script = project.file('node_modules/@angular/cli/bin/ng')
-    args = ['update']
+tasks.register('ngUpdate', NpxTask) {
+    dependsOn('npmInstall')
+    command = '@angular/cli'
+    args = ['update', '@angular/core@14', '@angular/cli@14']
 }
 
 processResources.dependsOn 'ngBuild'
