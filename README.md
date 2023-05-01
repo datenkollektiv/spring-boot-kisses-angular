@@ -2,7 +2,7 @@
 
 # Spring Boot kisses Angular 4+
 
-> Update: The project has been migrated to Spring Boot 2.6.x and Angular 15.
+> Update: The project has been migrated to Spring Boot 3.0.x and Angular 15.
 
 With a strong Java and Spring Framework background and looking around in the JavaScript world it seems natural to reach out into a new technology by integrating it into a know build chain.
 
