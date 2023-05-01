@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "ES2022",
     "module": "commonjs",
     "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "lib": ["es2015", "dom"]
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "useDefineForClassFields": false
   },
   "compileOnSave": false,
   "buildOnSave": false
