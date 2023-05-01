@@ -15,15 +15,17 @@ This repo is a companion of
 
 ## Build Docker/OCI image locally
 
-```sh
-gradle jibDockerBuild
+```shell
+gradle -Dplatform.architecture=arm64 jibDockerBuild
 ```
 
 > Note: This command requires a Docker daemon to be present locally.
 > For other options please refer to the [Gradle](https://gradle.org/) plugin [GoogleContainerTools/jib](https://github.com/GoogleContainerTools/jib)
 
-```sh
-docker run -it --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.5
+```shell
+export ARCH_POSTFIX=".arm64"
+open http://localhost:8080/app/index.html
+docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.14${ARCH_POSTFIX}
 ```
 
 Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access app `42`.

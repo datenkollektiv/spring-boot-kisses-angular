@@ -71,9 +71,23 @@ processResources.dependsOn 'ngBuild'
 jibDockerBuild.dependsOn 'processResources'
 
 jib {
+    if (System.properties['platform.architecture'] == 'arm64') {
+        from {
+            platforms {
+                platform {
+                    architecture = 'arm64'
+                    os = 'linux'
+                }
+            }
+        }
+    }
     to {
         image = 'datenkollektiv/spring-boot-kisses-angular'
-        tags = ['latest', project.version] as List<String>
+        if (System.properties['platform.architecture'] == 'arm64') {
+            tags = ['latest.arm64', project.version + '.arm64'] as List<String>
+        } else {
+            tags = ['latest', project.version] as List<String>
+        }
     }
     container {
         appRoot = '/app'
