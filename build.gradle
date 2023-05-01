@@ -1,5 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.7'
+    // https://plugins.gradle.org/plugin/org.springframework.boot
+    id 'org.springframework.boot' version '3.0.6'
 
     // https://plugins.gradle.org/plugin/com.github.node-gradle.node
     id "com.github.node-gradle.node" version "3.6.0"
@@ -19,7 +20,7 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 
     archivesBaseName = 'spring-boot-kisses-angular'
