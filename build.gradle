@@ -11,7 +11,7 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
-version = '0.5.14'
+version = '0.5.15'
 
 repositories {
     mavenCentral()
@@ -68,7 +68,7 @@ tasks.register('ngServeProduction', NpxTask) {
 tasks.register('ngUpdate', NpxTask) {
     dependsOn('npmInstall')
     command = '@angular/cli'
-    args = ['update', '@angular/core@14', '@angular/cli@14']
+    args = ['update', '@angular/core@15', '@angular/cli@15']
 }
 
 processResources.dependsOn 'ngBuild'

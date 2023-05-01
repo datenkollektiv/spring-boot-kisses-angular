@@ -2,7 +2,7 @@
 
 # Spring Boot kisses Angular 4+
 
-> Update: The project has been migrated to Spring Boot 2.6.x and Angular 14.
+> Update: The project has been migrated to Spring Boot 2.6.x and Angular 15.
 
 With a strong Java and Spring Framework background and looking around in the JavaScript world it seems natural to reach out into a new technology by integrating it into a know build chain.
 
@@ -25,7 +25,7 @@ gradle -Dplatform.architecture=arm64 jibDockerBuild
 ```shell
 export ARCH_POSTFIX=".arm64"
 open http://localhost:8080/app/index.html
-docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.14${ARCH_POSTFIX}
+docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.15${ARCH_POSTFIX}
 ```
 
 Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access app `42`.
