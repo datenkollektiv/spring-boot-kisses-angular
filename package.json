@@ -18,7 +18,7 @@
     "@angular/compiler-cli": "15.2.8",
     "@angular-devkit/build-angular": "15.2.7",
     "@ngtools/webpack": "15.2.7",
-    "postcss": "8.4.12",
+    "postcss": "8.4.31",
     "typescript": "4.8.4",
     "webpack": "5.81.0",
     "webpack-dev-server": "4.8.1"
