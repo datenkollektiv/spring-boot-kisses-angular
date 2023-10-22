@@ -25,7 +25,7 @@ gradle -Dplatform.architecture=arm64 jibDockerBuild
 ```shell
 export ARCH_POSTFIX=".arm64"
 open http://localhost:8080/app/index.html
-docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.15${ARCH_POSTFIX}
+docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.16${ARCH_POSTFIX}
 ```
 
 Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access app `42`.
