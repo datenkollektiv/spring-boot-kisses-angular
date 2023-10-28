@@ -37,5 +37,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-name: 'Nightly'
           tag-name: 'nightly'
-          asset-name: 'spring-boot-kisses-angular-0.4.0-nightly.jar'
-          file: './build/libs/spring-boot-kisses-angular-0.4.0.jar'
+          asset-name: 'spring-boot-kisses-angular-0.5.16-nightly.jar'
+          file: './build/libs/spring-boot-kisses-angular-0.5.16.jar'
