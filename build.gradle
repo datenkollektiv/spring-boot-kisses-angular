@@ -40,7 +40,7 @@ sourceSets {
 
 node {
     // https://nodejs.org/en/about/releases/
-    version = '18.18.2'
+    version = '18.20.8'
     download = true
 }
 
