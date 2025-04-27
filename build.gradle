@@ -6,7 +6,7 @@ plugins {
     id "com.github.node-gradle.node" version "3.6.0"
 
     // https://plugins.gradle.org/plugin/com.google.cloud.tools.jib
-    id "com.google.cloud.tools.jib" version "3.3.2"
+    id "com.google.cloud.tools.jib" version "3.4.5"
 }
 
 apply plugin: 'java'
