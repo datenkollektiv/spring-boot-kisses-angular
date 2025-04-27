@@ -57,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "SpringBootKissesAngular:build"
+            "buildTarget": "SpringBootKissesAngular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "SpringBootKissesAngular:build:production"
+              "buildTarget": "SpringBootKissesAngular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "SpringBootKissesAngular:build"
+            "buildTarget": "SpringBootKissesAngular:build"
           }
         },
         "lint": {
