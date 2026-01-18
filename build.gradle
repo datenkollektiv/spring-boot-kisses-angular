@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.0.12'
 
     // https://plugins.gradle.org/plugin/com.github.node-gradle.node
-    id "com.github.node-gradle.node" version "3.6.0"
+    id "com.github.node-gradle.node" version "7.0.2"
 
     // https://plugins.gradle.org/plugin/com.google.cloud.tools.jib
     id "com.google.cloud.tools.jib" version "3.4.5"
@@ -40,7 +40,7 @@ sourceSets {
 
 node {
     // https://nodejs.org/en/about/releases/
-    version = '18.20.8'
+    version = '20.19.1'
     download = true
 }
 
