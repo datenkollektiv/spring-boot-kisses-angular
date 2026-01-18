@@ -4,7 +4,7 @@
 
 > Update: The project has been migrated to Spring Boot 3.0.x and Angular 15.
 
-With a strong Java and Spring Framework background and looking around in the JavaScript world it seems natural to reach out into a new technology by integrating it into a know build chain.
+With a strong Java and Spring Framework background and looking around in the JavaScript world, it seems natural to reach out into a new technology by integrating it into a know build chain.
 
 This repo is a companion of
 * [Update of the Spring Boot + Angular Example](https://devops.datenkollektiv.de/update-of-the-spring-boot-angular-example.html),
@@ -13,10 +13,10 @@ This repo is a companion of
 
 > Note: The [Online Spring Boot Banner Generator](https://devops.datenkollektiv.de/banner.txt/index.html) has emerged from this template...please have a look at [Create Your Own Spring Boot Banner](https://devops.datenkollektiv.de/create-your-own-spring-boot-banner.html) for more details.
 
-## Build Docker/OCI image locally
+## Build (clean) Docker/OCI image locally
 
 ```shell
-gradle -Dplatform.architecture=arm64 jibDockerBuild
+gradle clean -Dplatform.architecture=arm64 jibDockerBuild
 ```
 
 > Note: This command requires a Docker daemon to be present locally.
