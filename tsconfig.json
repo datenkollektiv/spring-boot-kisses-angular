@@ -4,7 +4,6 @@
     "module": "ES2022",
     "esModuleInterop": true,
     "baseUrl": ".",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "sourceMap": true,
@@ -12,8 +11,10 @@
       "ES2022",
       "dom"
     ],
-    "useDefineForClassFields": false
-  },
-  "compileOnSave": false,
-  "buildOnSave": false
+    "useDefineForClassFields": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true
+  }
 }
