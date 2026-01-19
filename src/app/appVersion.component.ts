@@ -4,12 +4,12 @@ import {AppVersionService} from './appVersion.service';
 
 @Component({
     selector: 'app-version',
+    standalone: true,
     template: `
         <div>{{appVersion}}</div>
     `,
     providers: [AppVersionService]
 })
-
 export class AppVersionComponent {
     appVersion = 'Loading...';
 
