@@ -11,11 +11,9 @@ import {AppVersionService} from './appVersion.service';
 })
 
 export class AppVersionComponent {
+    appVersion = 'Loading...';
 
     constructor(private appVersionService: AppVersionService) {
-        let result = this.appVersionService.load();
-        result.subscribe(res => this.appVersion = res.number);
+        this.appVersionService.load().subscribe(res => this.appVersion = res.number);
     }
-
-    appVersion: string;
 }
