@@ -69,7 +69,7 @@ tasks.register('ngServeProduction', NpxTask) {
 tasks.register('ngUpdate', NpxTask) {
     dependsOn('npmInstall')
     command = '@angular/cli'
-    args = ['update', '@angular/core@15', '@angular/cli@15']
+    args = ['update', '@angular/core@18', '@angular/cli@18']
 }
 
 processResources.dependsOn 'ngBuild'
