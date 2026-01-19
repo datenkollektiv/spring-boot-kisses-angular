@@ -2,15 +2,15 @@
 
 # Spring Boot kisses Angular
 
-> Update: The project has been migrated to Spring Boot 3.0.x and Angular 20.
+> Update: The project has been migrated to Spring Boot 3.5.x, Java 21, and Angular 20.
 
 ## Technology Stack
 
 | Component   | Version    |
 |:------------|:-----------|
 | Angular     | 20.x       |
-| Spring Boot | 3.0.x      |
-| Java        | 17         |
+| Spring Boot | 3.5.x      |
+| Java        | 21         |
 | Node.js     | 20.x       |
 | TypeScript  | 5.8.x      |
 | Build Tool  | Gradle 8.x |
