@@ -19,6 +19,6 @@
     "postcss": "8.4.31",
     "typescript": "5.8.3",
     "webpack": "5.99.7",
-    "webpack-dev-server": "4.8.1"
+    "webpack-dev-server": "5.2.1"
   }
 }
