@@ -51,3 +51,17 @@ docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/sp
 ```
 
 Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access app `42`.
+
+## Maintenance
+
+Check for npm vulnerabilities:
+
+```shell
+./gradlew npmAudit
+```
+
+Fix npm vulnerabilities automatically:
+
+```shell
+./gradlew npmAuditFix
+```
