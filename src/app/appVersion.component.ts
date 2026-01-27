@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {AppVersionService} from './appVersion.service';
 
@@ -10,10 +10,18 @@ import {AppVersionService} from './appVersion.service';
     `,
     providers: [AppVersionService]
 })
-export class AppVersionComponent {
+export class AppVersionComponent implements OnInit {
     appVersion = 'Loading...';
 
-    constructor(private appVersionService: AppVersionService) {
-        this.appVersionService.load().subscribe(res => this.appVersion = res.number);
+    constructor(private appVersionService: AppVersionService) {}
+
+    ngOnInit(): void {
+        this.appVersionService.load().subscribe({
+            next: (res) => this.appVersion = res.number,
+            error: (err) => {
+                console.error('Failed to load version:', err);
+                this.appVersion = 'Error loading version';
+            }
+        });
     }
 }
