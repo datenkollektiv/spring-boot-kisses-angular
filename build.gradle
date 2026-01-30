@@ -1,12 +1,12 @@
 plugins {
     // https://plugins.gradle.org/plugin/org.springframework.boot
-    id 'org.springframework.boot' version '3.5.9'
+    id 'org.springframework.boot' version '3.5.10'
 
     // https://plugins.gradle.org/plugin/com.github.node-gradle.node
-    id "com.github.node-gradle.node" version "7.0.2"
+    id "com.github.node-gradle.node" version "7.1.0"
 
     // https://plugins.gradle.org/plugin/com.google.cloud.tools.jib
-    id "com.google.cloud.tools.jib" version "3.4.5"
+    id "com.google.cloud.tools.jib" version "3.5.2"
 }
 
 apply plugin: 'java'
@@ -40,7 +40,7 @@ sourceSets {
 
 node {
     // https://nodejs.org/en/about/releases/
-    version = '20.19.1'
+    version = '20.20.0'
     download = true
 }
 
