@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <!--
+    CVE-2025-68161 affects the Socket Appender in log4j-core.
+    This project only uses log4j-api (via log4j-to-slf4j from Spring Boot).
+    The Socket Appender is not in the dependency tree — false positive.
+    -->
+    <suppress>
+        <notes>False positive: CVE affects log4j-core Socket Appender, not log4j-api</notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j\-api@.*$</packageUrl>
+        <cve>CVE-2025-68161</cve>
+    </suppress>
+</suppressions>
