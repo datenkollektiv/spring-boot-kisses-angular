@@ -25,22 +25,12 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      # https://github.com/actions/cache
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      # https://github.com/gradle/actions
+      - name: 🔧 Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      # https://github.com/gradle/gradle-build-action
       - name: ⚙️ Build with Gradle
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: build
+        run: ./gradlew build
 
       # https://github.com/actions/upload-artifact
       - uses: actions/upload-artifact@v4

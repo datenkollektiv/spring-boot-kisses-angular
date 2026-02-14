@@ -4,7 +4,7 @@
 
 > Update: The project has been migrated to Spring Boot 3.5.x, Java 21, and Angular 20.
 
-> Note: Parts of this project were developed with the assistance of AI tools.
+> Note: Parts of this project were developed and maintained with the assistance of AI tools.
 > All generated code has been reviewed and curated by the maintainer.
 
 ## Technology Stack
