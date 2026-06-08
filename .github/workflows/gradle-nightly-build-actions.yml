@@ -12,21 +12,25 @@ jobs:
     steps:
       # https://github.com/actions/checkout
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # https://github.com/actions/setup-java
       - name: ☕️ Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
 
       # https://github.com/gradle/actions
       - name: 🔧 Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       - name: ⚙️ Build with Gradle
         run: ./gradlew build
+
+      - name: 🔎 Read project version
+        id: gradle-version
+        run: echo "version=$(./gradlew -q printVersion)" >> "$GITHUB_OUTPUT"
 
       # https://github.com/actions/upload-artifact
       - name: 📦 Upload artifact
@@ -41,5 +45,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-name: 'Nightly'
           tag-name: 'nightly'
-          asset-name: 'spring-boot-kisses-angular-0.5.16-nightly.jar'
-          file: './build/libs/spring-boot-kisses-angular-0.5.16.jar'
+          asset-name: 'spring-boot-kisses-angular-${{ steps.gradle-version.outputs.version }}-nightly.jar'
+          file: './build/libs/spring-boot-kisses-angular-${{ steps.gradle-version.outputs.version }}.jar'
