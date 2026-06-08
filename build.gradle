@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 
     // https://plugins.gradle.org/plugin/org.springframework.boot
-    id 'org.springframework.boot' version '4.0.5'
+    id 'org.springframework.boot' version '4.0.6'
 
     // https://plugins.gradle.org/plugin/com.github.node-gradle.node
     id "com.github.node-gradle.node" version "7.1.0"
@@ -12,7 +12,7 @@ plugins {
     id "com.google.cloud.tools.jib" version "3.5.3"
 
     // https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "12.2.1"
+    id "org.owasp.dependencycheck" version "12.2.2"
 }
 
 apply plugin: 'java'
@@ -47,7 +47,7 @@ springBoot {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    testImplementation(platform('org.junit:junit-bom:6.0.3'))
+    testImplementation(platform('org.junit:junit-bom:6.1.0'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.boot:spring-boot-restclient')
@@ -64,8 +64,14 @@ sourceSets {
 
 node {
     // https://nodejs.org/en/docs
-    version = '24.14.1'
+    version = '24.16.0'
     download = true
+}
+
+tasks.register('printVersion') {
+    doLast {
+        println project.version
+    }
 }
 
 tasks.register('npmAudit', NpmTask) {
@@ -141,7 +147,11 @@ dependencyCheck {
     analyzers {
         assemblyEnabled = false
         centralEnabled = false
+        // Frontend npm dependencies are covered by `./gradlew npmAudit` (npm audit --omit=dev).
+        // OWASP is scoped to the Java runtime classpath only — these two flags stop the on-disk
+        // NodePackageAnalyzer and the OSS Index lookup from duplicating that coverage.
         nodeAuditEnabled = false
+        nodeEnabled = false
         archiveEnabled = false
         jarEnabled = true
         kev {

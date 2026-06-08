@@ -4,24 +4,24 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Build Commands
 
-All builds are orchestrated through Gradle. No local Node.js installation is required -- Gradle downloads Node.js 20.x automatically.
+All builds are orchestrated through Gradle. No local Node.js installation is required -- Gradle downloads Node.js 24.14.1 automatically.
 
 ```sh
-./gradlew clean build        # Full production build (Java + Angular)
+./gradlew clean build        # Full production build (Java + Angular + smoke test)
 ./gradlew bootRun            # Start dev server at http://localhost:8080/app/index.html
 ./gradlew ngBuild            # Angular production build only
 ./gradlew npmAudit           # npm vulnerability scan
 ./gradlew npmAuditFix        # Auto-fix npm vulnerabilities
-./gradlew ngUpdate           # Update Angular packages (currently targets @20)
+./gradlew ngUpdate           # Update Angular packages (currently targets @21)
 ./gradlew jibDockerBuild     # Build Docker image (amd64)
 ./gradlew -Dplatform.architecture=arm64 jibDockerBuild  # Build Docker image (arm64)
 ```
 
-There is no dedicated test suite. Verification relies on a successful `./gradlew clean build`.
+Verification relies on a successful `./gradlew clean build`, which executes the `AppVersionControllerSmokeTest` Spring Boot integration test.
 
 ## Architecture
 
-Spring Boot 3.5.x backend (Java 21) with an Angular 20 frontend compiled into a single JAR.
+Spring Boot 4.0.x backend (Java 21) with an Angular 21 frontend compiled into a single JAR.
 
 ### Build pipeline
 
@@ -34,21 +34,21 @@ Angular assets are output to `src/generated/resources/static/app/` (not committe
 Package: `de.datenkollektiv.examples.springframework.boot.angular`
 
 - `AngularApplication.java` -- Spring Boot entry point
-- `AppVersionController.java` -- single REST endpoint: `GET /server/version` returns `{"number":"42","buildDate":"..."}`
-- `AppVersion.java` -- model with fluent builder (`withNumber()`)
+- `AppVersionController.java` -- single REST endpoint: `GET /server/version` returns build metadata as `{"number":"<gradle version>","buildDate":"<ISO instant>"}`, populated from Spring Boot's `BuildProperties` (with `"unknown"` fallback when metadata is absent)
+- `AppVersion.java` -- immutable `record` with `number` and `buildDate` components
 
-Only dependency: `spring-boot-starter-web`.
+Runtime dependency: `spring-boot-starter-web`. Tests use `spring-boot-starter-test` and `spring-boot-resttestclient`.
 
 ### Frontend
 
 Source lives in `src/` (not `src/main/frontend`). Key paths:
 
-- `src/main.ts` -- bootstraps standalone app with `provideHttpClient()`
-- `src/app/appVersion.component.ts` -- standalone component, selector `<app-version>`, fetches version on init
-- `src/app/appVersion.service.ts` -- calls `../server/version` (relative URL from `/app/` context)
+- `src/main.ts` -- bootstraps standalone app with `provideHttpClient()` and `provideZonelessChangeDetection()` (Zone.js is no longer used)
+- `src/app/appVersion.component.ts` -- standalone, `OnPush` component (selector `<app-version>`) that exposes the version as a signal via `toSignal`
+- `src/app/appVersion.service.ts` -- calls `/server/version` (absolute path) with a bounded retry (2 attempts, exponential delay, no retry on `4xx`)
 - `src/app/model/appVersion.ts` -- TypeScript model mirroring Java `AppVersion`
 
-Angular uses standalone components (no NgModule). The service is provided directly on the component.
+Angular uses standalone components (no NgModule) with signal-based state and zoneless change detection.
 
 ### Container image
 
