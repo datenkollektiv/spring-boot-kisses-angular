@@ -1,0 +1,7 @@
+services:
+
+  app:
+    # Override with IMAGE_TAG=latest.arm64 (or latest.amd64) when working with arch-specific local builds.
+    image: datenkollektiv/spring-boot-kisses-angular:${IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:8080:8080"

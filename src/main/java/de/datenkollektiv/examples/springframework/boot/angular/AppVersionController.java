@@ -1,22 +1,30 @@
 package de.datenkollektiv.examples.springframework.boot.angular;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/server/*")
+import java.time.Instant;
+import java.util.Objects;
+
+@RestController
+@RequestMapping("/server")
 public class AppVersionController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppVersionController.class);
+    private static final String UNKNOWN = "unknown";
 
-    @GetMapping("version")
-    public @ResponseBody
-    AppVersion version() {
-        LOG.info("Serving 'version' request");
-        return new AppVersion().withNumber("42");
+    private final BuildProperties buildProperties;
+
+    public AppVersionController(BuildProperties buildProperties) {
+        this.buildProperties = buildProperties;
+    }
+
+    @GetMapping("/version")
+    public AppVersion version() {
+        String number = Objects.toString(buildProperties.getVersion(), UNKNOWN);
+        Instant time = buildProperties.getTime();
+        String buildDate = time != null ? time.toString() : UNKNOWN;
+        return new AppVersion(number, buildDate);
     }
 }

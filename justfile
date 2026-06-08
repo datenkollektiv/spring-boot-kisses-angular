@@ -1,23 +1,38 @@
 # Spring Boot kisses Angular — task runner
-# https://github.com/casey/just
 
 set dotenv-load := false
 
-version  := `grep "^version" build.gradle | sed "s/.*'\\(.*\\)'/\\1/"`
-app_url  := "http://localhost:8080/app/index.html"
+app_url := "http://localhost:8080/app/index.html"
 
 # List available recipes
 default:
     @just --list
 
-# Full production build (Java + Angular)
-build:
+# ── Development ──────────────────────────────────────────────
+
+# Start local development server
+dev:
+    ./gradlew bootRun
+
+# Open local development server in browser
+open:
+    open {{ app_url }}
+
+# ── Testing ─────────────────────────────────────────────────
+
+# Run all tests (backend + frontend)
+test:
     ./gradlew clean build
 
-# Start dev server and open the app URL
-dev:
-    @echo "Starting at {{ app_url }}"
-    ./gradlew bootRun
+# Run backend tests only (JUnit 5)
+test-backend:
+    ./gradlew test
+
+# ── Build ────────────────────────────────────────────────────
+
+# Full production build (Angular + Java + JAR + tests)
+dist:
+    ./gradlew clean build
 
 # Angular production build only
 ng-build:
@@ -27,42 +42,45 @@ ng-build:
 ng-update:
     ./gradlew ngUpdate
 
+# ── Container ───────────────────────────────────────────────
+
+# Build local OCI image (macOS arm64)
+build:
+    ./gradlew -Dplatform.architecture=arm64 jibDockerBuild
+
+# Rebuild image and restart container
+rebuild: down build up
+
+# Clean, rebuild image, and restart container
+clean-rebuild: down clean build up
+
+# Start container
+up:
+    docker compose up -d
+    @echo "UI available at {{ app_url }}"
+
+# Stop container
+down:
+    docker compose down
+
+# View service logs (follow mode)
+logs:
+    docker compose logs -f
+
+# ── Maintenance ─────────────────────────────────────────────
+
 # Run npm vulnerability audit
-audit:
+npm-audit:
     ./gradlew npmAudit
 
-# Auto-fix npm vulnerabilities
-audit-fix:
+# Auto-fix npm audit findings
+npm-audit-fix:
     ./gradlew npmAuditFix
 
-# Build Docker image (default: arm64 on Apple Silicon)
-docker arch="arm64":
-    ./gradlew clean -Dplatform.architecture={{ arch }} jibDockerBuild
-
-# Run the Docker container locally
-docker-run arch="arm64":
-    #!/usr/bin/env sh
-    if [ "{{ arch }}" = "arm64" ]; then
-        tag="{{ version }}.arm64"
-    else
-        tag="{{ version }}"
-    fi
-    echo "Running image with tag $tag — {{ app_url }}"
-    docker run --rm -p 8080:8080 --name spring-boot-kisses-angular \
-        "datenkollektiv/spring-boot-kisses-angular:$tag"
-
-# Update the Gradle wrapper to a specific version
-gradle-wrapper version:
-    ./gradlew wrapper --gradle-version {{ version }}
-
-# ─── Maintenance ────────────────────────────────────────────
-
-# OWASP dependency check (Java CVE scan)
-owasp-check:
+# Run OWASP dependency-check (Java CVE scan)
+owasp:
     ./scripts/owasp-check.sh
 
-# Verify the project: clean build + npm audit + OWASP check (use before publishing)
-verify:
-    ./gradlew clean build
-    ./gradlew npmAudit
-    ./scripts/owasp-check.sh
+# Clean build outputs
+clean:
+    ./gradlew clean

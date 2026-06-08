@@ -2,7 +2,7 @@
 
 # Spring Boot kisses Angular
 
-> Update: The project has been migrated to Spring Boot 3.5.x, Java 21, and Angular 20.
+> Update: The project has been migrated to Spring Boot 4.0.x, Java 21, and Angular 21.
 
 > Note: Parts of this project were developed and maintained with the assistance of AI tools.
 > All generated code has been reviewed and curated by the maintainer.
@@ -11,12 +11,12 @@
 
 | Component   | Version    |
 |:------------|:-----------|
-| Angular     | 20.x       |
-| Spring Boot | 3.5.x      |
+| Angular     | 21.x       |
+| Spring Boot | 4.0.x      |
 | Java        | 21         |
-| Node.js     | 20.x       |
-| TypeScript  | 5.8.x      |
-| Build Tool  | Gradle 8.x |
+| Node.js     | 24.x       |
+| TypeScript  | 5.9.x      |
+| Build Tool  | Gradle 9.x |
 
 With a strong Java and Spring Framework background and looking around in the JavaScript world, it seems natural to reach out into a new technology by integrating it into a known build chain.
 
@@ -29,7 +29,7 @@ This repo is a companion of
 
 ## Quick Start
 
-```shell
+```sh
 ./gradlew bootRun
 ```
 
@@ -37,31 +37,31 @@ Then open [http://localhost:8080/app/index.html](http://localhost:8080/app/index
 
 ## Build (clean) Docker/OCI image locally
 
-```shell
+```sh
 ./gradlew clean -Dplatform.architecture=arm64 jibDockerBuild
 ```
 
 > Note: This command requires a Docker daemon to be present locally.
 > For other options please refer to the [Gradle](https://gradle.org/) plugin [GoogleContainerTools/jib](https://github.com/GoogleContainerTools/jib)
 
-```shell
+```sh
 export ARCH_POSTFIX=".arm64"
 open http://localhost:8080/app/index.html
-docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.5.16${ARCH_POSTFIX}
+docker run --rm -p 8080:8080 --name spring-boot-kisses-angular datenkollektiv/spring-boot-kisses-angular:0.6.0${ARCH_POSTFIX}
 ```
 
-Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access app `42`.
+Point your browser to [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) and access the app version.
 
 ## Maintenance
 
 Check for npm vulnerabilities:
 
-```shell
+```sh
 ./gradlew npmAudit
 ```
 
 Fix npm vulnerabilities automatically:
 
-```shell
+```sh
 ./gradlew npmAuditFix
 ```

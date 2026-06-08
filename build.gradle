@@ -1,6 +1,9 @@
 plugins {
+    // https://plugins.gradle.org/plugin/io.spring.dependency-management
+    id 'io.spring.dependency-management' version '1.1.7'
+
     // https://plugins.gradle.org/plugin/org.springframework.boot
-    id 'org.springframework.boot' version '3.5.10'
+    id 'org.springframework.boot' version '4.0.5'
 
     // https://plugins.gradle.org/plugin/com.github.node-gradle.node
     id "com.github.node-gradle.node" version "7.1.0"
@@ -9,13 +12,13 @@ plugins {
     id "com.google.cloud.tools.jib" version "3.5.3"
 
     // https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "12.2.0"
+    id "org.owasp.dependencycheck" version "12.2.1"
 }
 
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
-version = '0.5.16'
+version = '0.6.0'
 
 repositories {
     mavenCentral()
@@ -25,12 +28,30 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
 
-    archivesBaseName = 'spring-boot-kisses-angular'
+base {
+    archivesName = 'spring-boot-kisses-angular'
+}
+
+tasks.test {
+    useJUnitPlatform {
+    }
+}
+
+springBoot {
+    mainClass = 'de.datenkollektiv.examples.springframework.boot.angular.AngularApplication'
+    buildInfo()
 }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    testImplementation(platform('org.junit:junit-bom:6.0.3'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-restclient')
+    testImplementation('org.springframework.boot:spring-boot-resttestclient')
 }
 
 def generatedResources = "src/generated/resources"
@@ -42,14 +63,14 @@ sourceSets {
 }
 
 node {
-    // https://nodejs.org/en/about/releases/
-    version = '20.20.0'
+    // https://nodejs.org/en/docs
+    version = '24.14.1'
     download = true
 }
 
 tasks.register('npmAudit', NpmTask) {
     dependsOn(npmInstall)
-    args = ['audit']
+    args = ['audit', '--omit=dev']
 }
 
 tasks.register('npmAuditFix', NpmTask) {
@@ -72,7 +93,7 @@ tasks.register('ngServeProduction', NpxTask) {
 tasks.register('ngUpdate', NpxTask) {
     dependsOn('npmInstall')
     command = '@angular/cli'
-    args = ['update', '@angular/core@20', '@angular/cli@20']
+    args = ['update', '@angular/core@21', '@angular/cli@21']
 }
 
 processResources.dependsOn 'ngBuild'
@@ -107,19 +128,30 @@ jib {
         paths {
             path {
                 from = file(generatedResources)
-                into = '/app'
+                into = '/app/resources'
             }
         }
     }
 }
 
 dependencyCheck {
+    formats = ['JSON', 'HTML']
     suppressionFile = 'owasp-suppressions.xml'
-    // npm audit already covers JavaScript — scan Java dependencies only
+    scanConfigurations = ['runtimeClasspath']
     analyzers {
-        nodeAudit { enabled = false }
-        nodePackage { enabled = false }
-        ossIndex { enabled = false }
+        assemblyEnabled = false
+        centralEnabled = false
+        nodeAuditEnabled = false
+        archiveEnabled = false
+        jarEnabled = true
+        kev {
+            enabled = false
+        }
+    }
+    nvd {
+        apiKey = System.getenv('NVD_API_KEY') ?: ''
+        validForHours = 24
+        delay = 2000
     }
 }
 

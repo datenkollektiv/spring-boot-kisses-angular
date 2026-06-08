@@ -1,9 +1,4 @@
-export class AppVersion {
+export interface AppVersion {
     number: string;
     buildDate: string;
-
-    constructor(number: string, buildDate: string) {
-        this.number = number;
-        this.buildDate = buildDate;
-    }
 }
