@@ -3,10 +3,16 @@ on:
   schedule:
     - cron: '0 2 * * *' # run at 2 AM UTC
 
+# Default to the least privilege; the job below overrides to `contents: write`
+# only because GitHub Releases (used by djnicholson/release-action) live
+# under the `contents` scope.
+permissions:
+  contents: read
+
 jobs:
   build:
     permissions:
-      contents: write
+      contents: write # required to publish the nightly GitHub Release
     runs-on: ubuntu-latest
 
     steps:

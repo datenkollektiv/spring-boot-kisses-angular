@@ -4,7 +4,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Build Commands
 
-All builds are orchestrated through Gradle. No local Node.js installation is required -- Gradle downloads Node.js 24.14.1 automatically.
+All builds are orchestrated through Gradle. No local Node.js installation is required -- Gradle downloads Node.js 24.16.0 automatically.
 
 ```sh
 ./gradlew clean build        # Full production build (Java + Angular + smoke test)

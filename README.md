@@ -35,6 +35,8 @@ This repo is a companion of
 
 Then open [http://localhost:8080/app/index.html](http://localhost:8080/app/index.html) in your browser.
 
+The backend exposes a single REST endpoint, `GET /server/version`, which returns build metadata as `{ "number": "...", "buildDate": "..." }` sourced from Spring Boot's `BuildProperties`.
+
 ## Build (clean) Docker/OCI image locally
 
 ```sh
@@ -65,3 +67,21 @@ Fix npm vulnerabilities automatically:
 ```sh
 ./gradlew npmAuditFix
 ```
+
+Other useful Gradle tasks:
+
+- `./gradlew ngBuild` — run the Angular production build only.
+- `./gradlew ngUpdate` — update Angular packages (currently targets `@21`).
+- `./gradlew jibDockerBuild` — build the OCI image via Google Jib (no Dockerfile required).
+- `./gradlew printVersion` — print the project version (used by CI to name release artifacts).
+
+## Versioning
+
+There are three version-like values in this project; only the first is the release version:
+
+- **Gradle `project.version`** (`build.gradle`) — the canonical release version.
+  It drives the JAR file name, the Jib image tags, the nightly CI artifact name, and the `BuildProperties` shipped inside the JAR.
+- **Backend `GET /server/version`** — at runtime, the controller returns the same value (via Spring Boot's `BuildProperties`).
+  This is what the Angular UI displays.
+- **`package.json` `version`** — pinned to `0.0.0-private`.
+  The package is `"private": true` and is never published; the field is kept for npm tooling and is intentionally decoupled from the release version to avoid silent drift.

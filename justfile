@@ -38,7 +38,7 @@ dist:
 ng-build:
     ./gradlew ngBuild
 
-# Update Angular packages (currently targets @20)
+# Update Angular packages (currently targets @21)
 ng-update:
     ./gradlew ngUpdate
 
