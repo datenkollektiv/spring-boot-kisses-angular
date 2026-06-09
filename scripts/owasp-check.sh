@@ -18,13 +18,15 @@ if [[ ! -f "${REPORT}" ]]; then
   exit 1
 fi
 
-grep -o 'CVE-[0-9]*-[0-9]*' "${REPORT}" \
-  | sort -u \
-  | while read -r cve; do
-      echo "  - ${cve}"
-    done
+cves=$(grep -o 'CVE-[0-9]*-[0-9]*' "${REPORT}" | sort -u)
 
-vuln_count=$(grep -o 'CVE-[0-9]*-[0-9]*' "${REPORT}" | sort -u | wc -l | tr -d ' ')
+if [[ -n "${cves}" ]]; then
+  printf '%s\n' "${cves}" | sed 's/^/  - /'
+  vuln_count=$(printf '%s\n' "${cves}" | wc -l | tr -d ' ')
+else
+  vuln_count=0
+fi
+
 echo ""
 echo "Unique CVEs: ${vuln_count}"
 

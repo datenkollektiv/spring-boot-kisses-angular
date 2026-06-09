@@ -50,6 +50,8 @@ dependencies {
     testImplementation(platform('org.junit:junit-bom:6.1.0'))
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    // Provides org.springframework.boot.restclient.RestTemplateBuilder used during
+    // Spring Boot 4 auto-configuration type deduction at test context load time.
     testImplementation('org.springframework.boot:spring-boot-restclient')
     testImplementation('org.springframework.boot:spring-boot-resttestclient')
 }
