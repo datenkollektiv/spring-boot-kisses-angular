@@ -20,19 +20,19 @@ open:
 
 # ── Testing ─────────────────────────────────────────────────
 
-# Run all tests (backend + frontend)
-test:
+# Run the full quality gate as CI does (clean + Angular build + Java build + JUnit smoke)
+ci:
     ./gradlew clean build
 
-# Run backend tests only (JUnit 5)
-test-backend:
+# Run backend tests only (fast — JUnit 5, no Angular rebuild)
+test:
     ./gradlew test
 
-# ── Build ────────────────────────────────────────────────────
+# Full pre-merge check: build + tests + container integration smoke
+verify:
+    scripts/verify-container.sh
 
-# Full production build (Angular + Java + JAR + tests)
-dist:
-    ./gradlew clean build
+# ── Build ────────────────────────────────────────────────────
 
 # Angular production build only
 ng-build:
@@ -45,14 +45,14 @@ ng-update:
 # ── Container ───────────────────────────────────────────────
 
 # Build local OCI image (macOS arm64)
-build:
+image:
     ./gradlew -Dplatform.architecture=arm64 jibDockerBuild
 
 # Rebuild image and restart container
-rebuild: down build up
+rebuild: down image up
 
 # Clean, rebuild image, and restart container
-clean-rebuild: down clean build up
+clean-rebuild: down clean image up
 
 # Start container
 up:
@@ -68,6 +68,15 @@ logs:
     docker compose logs -f
 
 # ── Maintenance ─────────────────────────────────────────────
+
+# Verify required tools are installed and at the correct versions
+doctor:
+    @echo "Checking development environment..."
+    @./gradlew --version | grep -E '^(Gradle |Launcher JVM)'
+    @docker --version
+    @docker compose version
+    @just --version
+    @echo "Environment OK"
 
 # Run npm vulnerability audit
 npm-audit:
