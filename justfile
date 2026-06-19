@@ -28,6 +28,13 @@ ci:
 test:
     ./gradlew test
 
+# Run frontend unit tests only (Vitest via @angular/build, Node + jsdom)
+test-ui:
+    ./gradlew ngTest
+
+# Run both backend (JUnit) and frontend (Vitest) unit tests
+test-all: test test-ui
+
 # Full pre-merge check: build + tests + container integration smoke
 verify:
     scripts/verify-container.sh

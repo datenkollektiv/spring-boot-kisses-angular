@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Add a Spring Boot smoke test for `/server/version`.
 - Add a dedicated `printVersion` Gradle task so CI can read the project version without grepping `gradlew properties` output.
+- Add a frontend unit test suite using Vitest via the `@angular/build:unit-test` builder (Node + jsdom), covering `AppVersionService` (happy path, no-retry-on-`4xx`, retry-on-`5xx`) and `AppVersionComponent` (loading, loaded, and error states). Run with `just test-ui` / `just test-all` (or `./gradlew ngTest`); wired into Gradle `check` so `./gradlew build` runs it alongside the JUnit smoke test.
 
 ### Changed
 
