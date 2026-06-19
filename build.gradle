@@ -107,6 +107,19 @@ tasks.register('ngUpdate', NpxTask) {
     args = ['update', '@angular/core@21', '@angular/cli@21']
 }
 
+tasks.register('ngTest', NpxTask) {
+    dependsOn('npmInstall')
+    command = '@angular/cli'
+    // Single run (no watch); Vitest runs in Node + jsdom via @angular/build:unit-test.
+    args = ['test', '--no-watch']
+}
+
+// Run the Angular unit tests as part of `check` (and therefore `build`/CI),
+// alongside the JUnit smoke test.
+tasks.named('check') {
+    dependsOn 'ngTest'
+}
+
 processResources.dependsOn 'ngBuild'
 
 jibDockerBuild.dependsOn 'processResources'
