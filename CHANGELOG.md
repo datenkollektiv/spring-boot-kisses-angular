@@ -13,13 +13,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Modernize the platform baseline to Spring Boot 4.0.6, Angular 21.2.x, Node.js 24.16.0, TypeScript 5.9.3, and Gradle 9.5.1.
+- Modernize the platform baseline to Spring Boot 4.0.7, Angular 21.2.x, Node.js 24.17.0, TypeScript 5.9.3, and Gradle 9.5.1.
 - Switch the Angular build to `browser-esbuild` and remove unused legacy TSLint, Protractor, and Zone.js wiring.
 - Serve application version data from Spring Boot build metadata instead of the placeholder `42`.
 - Align Jib resource placement with Spring Boot's container classpath layout.
 - Reduce the frontend version-load retry budget to two attempts and skip retries on `4xx` responses.
 - Parameterize the `docker-compose.yml` image tag via `IMAGE_TAG` (defaults to `latest`) so the file is not arm64-specific.
-- Bump Angular core to `21.2.16` and Angular CLI / devkit to `21.2.14` (the CLI / devkit train is one patch behind core within `21.2.x`).
+- Bump Angular core to `21.2.17` and Angular CLI / devkit to `21.2.16` (the CLI / devkit train is one patch behind core within `21.2.x`).
 - Bump the JUnit BOM to `6.1.0`.
 - Bump the OWASP `dependency-check` Gradle plugin to `12.2.2`.
 - Bump GitHub Actions versions: `actions/checkout@v6`, `actions/setup-java@v5`, `gradle/actions/setup-gradle@v6`.
@@ -35,4 +35,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Security
 
-- Bump Spring Boot to `4.0.6` to pick up the June 2026 security patch line (CVE-2026-40970..40977); none of the directly affected components are used by this project, but the bump keeps us on the supported patch line.
+- Bump Spring Boot to `4.0.6` to pick up the June 2026 security patch line ([CVE-2026-40970](https://www.cve.org/CVERecord?id=CVE-2026-40970) through [CVE-2026-40977](https://www.cve.org/CVERecord?id=CVE-2026-40977)); none of the directly affected components are used by this project, but the bump keeps us on the supported patch line.
+- Bump Angular core to `21.2.17` to fix three advisories in the production bundle: [GHSA-48r7-hpm6-gfxm](https://github.com/advisories/GHSA-48r7-hpm6-gfxm) (high, DoS via OOM in `formatDate`), [GHSA-39pv-4j6c-2g6v](https://github.com/advisories/GHSA-39pv-4j6c-2g6v) (high, weak 32-bit `HttpTransferCache` cache-key hashing), and [GHSA-58w9-8g37-x9v5](https://github.com/advisories/GHSA-58w9-8g37-x9v5) (moderate, two-way binding sanitization bypass / XSS).
