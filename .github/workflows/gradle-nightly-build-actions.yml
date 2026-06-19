@@ -4,7 +4,7 @@ on:
     - cron: '0 2 * * *' # run at 2 AM UTC
 
 # Default to the least privilege; the job below overrides to `contents: write`
-# only because GitHub Releases (used by djnicholson/release-action) live
+# only because GitHub Releases (used by softprops/action-gh-release) live
 # under the `contents` scope.
 permissions:
   contents: read
@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     permissions:
-      contents: write # required to publish the nightly GitHub Release
+      contents: write # required to create/update the nightly GitHub Release and upload its asset
     runs-on: ubuntu-latest
 
     steps:
@@ -45,11 +45,37 @@ jobs:
           name: Package
           path: build/libs
 
+      # softprops/action-gh-release uploads files under their on-disk name, so stage
+      # a copy under a STATIC, version-independent name. The release uses a fixed
+      # `nightly` tag; `overwrite_files` (default true) only replaces an asset of the
+      # *same* name, so a version-stamped name would leave stale JARs accumulating on
+      # the release every time the project version bumps. A static name means each run
+      # cleanly replaces the single current artifact. The version is surfaced in the
+      # release body instead (see below).
+      #
+      # The source JAR is discovered dynamically rather than hardcoding the
+      # version-stamped filename, so the workflow stays decoupled from Gradle's archive
+      # naming. The `-plain.jar` produced by the `jar` task is excluded so we always
+      # pick the bootable Spring Boot JAR.
+      - name: 📛 Stage nightly artifact
+        run: |
+          set -euo pipefail
+          jar_path="$(find build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-plain.jar' | head -n 1)"
+          if [ -z "$jar_path" ]; then
+            echo "::error::No bootable JAR found in build/libs" >&2
+            exit 1
+          fi
+          echo "Staging $jar_path as the nightly artifact"
+          cp "$jar_path" build/libs/spring-boot-kisses-angular-nightly.jar
+
+      # Pinned to a commit SHA (not a floating tag) for supply-chain reproducibility.
+      # https://github.com/softprops/action-gh-release/releases/tag/v3.0.0
       - name: 🚀 Upload Nightly Build
-        uses: djnicholson/release-action@v2.11
+        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3.0.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release-name: 'Nightly'
-          tag-name: 'nightly'
-          asset-name: 'spring-boot-kisses-angular-${{ steps.gradle-version.outputs.version }}-nightly.jar'
-          file: './build/libs/spring-boot-kisses-angular-${{ steps.gradle-version.outputs.version }}.jar'
+          name: 'Nightly'
+          tag_name: 'nightly'
+          prerelease: true # nightly builds are not stable releases
+          body: 'Automated nightly build of version ${{ steps.gradle-version.outputs.version }}.'
+          files: 'build/libs/spring-boot-kisses-angular-nightly.jar'
+          fail_on_unmatched_files: true

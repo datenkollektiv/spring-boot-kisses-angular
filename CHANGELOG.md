@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Modernize the platform baseline to Spring Boot 4.0.7, Angular 21.2.x, Node.js 24.17.0, TypeScript 5.9.3, and Gradle 9.5.1.
+- Modernize the platform baseline to Spring Boot 4.1.0, Angular 21.2.x, Node.js 24.17.0, TypeScript 5.9.3, and Gradle 9.6.0.
 - Switch the Angular build to `browser-esbuild` and remove unused legacy TSLint, Protractor, and Zone.js wiring.
 - Serve application version data from Spring Boot build metadata instead of the placeholder `42`.
 - Align Jib resource placement with Spring Boot's container classpath layout.
@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Bump the OWASP `dependency-check` Gradle plugin to `12.2.2`.
 - Bump GitHub Actions versions: `actions/checkout@v6`, `actions/setup-java@v5`, `gradle/actions/setup-gradle@v6`.
 - De-hardcode the nightly workflow artifact name; it now resolves the project version at runtime via `./gradlew -q printVersion`.
+- Migrate the nightly release step from the unmaintained `djnicholson/release-action@v2.11` (no release since 2020) to `softprops/action-gh-release`, pinned to the `v3.0.0` commit SHA for supply-chain reproducibility and marked `prerelease`.
+- Upload the nightly JAR under a static, version-independent `spring-boot-kisses-angular-nightly.jar` (discovered dynamically, excluding the `-plain.jar`) so repeated runs against the fixed `nightly` tag cleanly replace the single artifact instead of accumulating stale version-named JARs; the build version is surfaced in the release body instead.
 - Decouple the `package.json` version from the project release version by pinning it to `0.0.0-private`; the source of truth is `build.gradle` `version` (consumed by Jib tags, the JAR name, and CI release naming).
 - Drop the `src/environments/*.ts` files, the `angular.json` `fileReplacements` block, and the `enableProdMode()` call in `src/main.ts`; Angular 21 production mode is implied by `ng build --configuration=production` via the optimization toolchain, so the single-boolean scaffold added no behaviour.
 
