@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Modernize the platform baseline to Spring Boot 4.1.0, Angular 21.2.x, Node.js 24.17.0, TypeScript 5.9.3, and Gradle 9.6.0.
+- Modernize the platform baseline to Spring Boot 4.1.0, Angular 22.0.x, Node.js 24.17.0, TypeScript 6.0.x, and Gradle 9.6.0.
 - Migrate the Angular build from `@angular-devkit/build-angular:browser-esbuild` to the standalone `@angular/build:application` builder (esbuild/Vite), removing the `@angular-devkit/build-angular` dev dependency and the bundled legacy webpack toolchain (`webpack-dev-server`, `@angular-devkit/build-webpack`, `@ngtools/webpack`, `sockjs`, …) it dragged in even though the project already built with esbuild.
 - Adapt `angular.json` to the `:application` builder schema: rename the entry option `main` → `browser`, and set `outputPath` to `{ "base": "src/generated/resources/static/app", "browser": "" }`. The empty `browser` is deliberate — it keeps the built assets flat under `static/app/` (instead of nesting them in a `browser/` subdirectory) so Spring Boot keeps serving them at the same paths. The webpack-only flags `namedChunks`, `vendorChunk`, and `buildOptimizer` were dropped as they are not part of the modern builder.
 - Remove unused legacy TSLint, Protractor, and Zone.js wiring (earlier modernization).
@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Align Jib resource placement with Spring Boot's container classpath layout.
 - Reduce the frontend version-load retry budget to two attempts and skip retries on `4xx` responses.
 - Parameterize the `docker-compose.yml` image tag via `IMAGE_TAG` (defaults to `latest`) so the file is not arm64-specific.
-- Bump Angular core to `21.2.17` and Angular CLI / devkit to `21.2.16` (the CLI / devkit train is one patch behind core within `21.2.x`).
+- Upgrade Angular from 21 to 22 (`@angular/core` `22.0.2`; `@angular/build` and `@angular/cli` `22.0.3`) and TypeScript from 5.9 to 6.0 (`6.0.3`), which Angular 22 requires. Node.js 24.17.0 and RxJS 7.8.2 already satisfy Angular 22's supported ranges, and the app was already on the v22-friendly idioms (zoneless, standalone, signals, `OnPush` — now the default). Removed the deprecated `baseUrl` from `tsconfig.json` (unused under `moduleResolution: "bundler"`; TypeScript 6.0 raises an error on it). The upgrade further trims the dev-only build-toolchain advisory surface (7 → 5).
 - Bump the JUnit BOM to `6.1.0`.
 - Bump the OWASP `dependency-check` Gradle plugin to `12.2.2`.
 - Bump GitHub Actions versions: `actions/checkout@v6`, `actions/setup-java@v5`, `gradle/actions/setup-gradle@v6`.
