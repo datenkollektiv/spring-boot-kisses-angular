@@ -2,7 +2,7 @@
 
 # Spring Boot kisses Angular
 
-> Update: The project has been migrated to Spring Boot 4.0.x, Java 21, and Angular 21.
+> Update: The project has been migrated to Spring Boot 4.1.x, Java 21, and Angular 22.
 
 > Note: Parts of this project were developed and maintained with the assistance of AI tools.
 > All generated code has been reviewed and curated by the maintainer.
@@ -11,11 +11,11 @@
 
 | Component   | Version    |
 |:------------|:-----------|
-| Angular     | 21.x       |
-| Spring Boot | 4.0.x      |
+| Angular     | 22.x       |
+| Spring Boot | 4.1.x      |
 | Java        | 21         |
 | Node.js     | 24.x       |
-| TypeScript  | 5.9.x      |
+| TypeScript  | 6.0.x      |
 | Build Tool  | Gradle 9.x |
 
 With a strong Java and Spring Framework background and looking around in the JavaScript world, it seems natural to reach out into a new technology by integrating it into a known build chain.
@@ -71,7 +71,7 @@ Fix npm vulnerabilities automatically:
 Other useful Gradle tasks:
 
 - `./gradlew ngBuild` — run the Angular production build only.
-- `./gradlew ngUpdate` — update Angular packages (currently targets `@21`).
+- `./gradlew ngUpdate` — update Angular packages (currently targets `@22`).
 - `./gradlew jibDockerBuild` — build the OCI image via Google Jib (no Dockerfile required).
 - `./gradlew printVersion` — print the project version (used by CI to name release artifacts).
 
