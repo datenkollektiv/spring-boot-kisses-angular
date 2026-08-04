@@ -1,0 +1,26 @@
+# Dependabot *version updates*. These require this file; *security* updates are
+# separate, toggled in the repo UI, and fire only on published advisories — which
+# is why this project had Dependabot PRs before this file existed.
+#
+# github-actions only: the workflows pin every action to a commit SHA (AGENTS.md
+# "Key Conventions") and pins go stale silently, so this is what keeps them
+# current. npm and gradle stay out — dev-only npm advisories are transitive
+# through `@angular/build` and upgrades run as a batch via the maintenance skill.
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+    labels:
+      - dependencies
+      - github-actions
+    groups:
+      # One PR per week for all action bumps rather than one per action — with
+      # five pinned actions, individual PRs are more review overhead than signal.
+      actions:
+        patterns:
+          - '*'

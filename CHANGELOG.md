@@ -26,6 +26,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Bump the JUnit BOM to `6.1.0`.
 - Bump the OWASP `dependency-check` Gradle plugin to `12.2.2`.
 - Bump GitHub Actions versions: `actions/checkout@v6`, `actions/setup-java@v5`, `gradle/actions/setup-gradle@v6`.
+- Bump `actions/upload-artifact` from `v4` to `v7`, clearing the Node 20 deprecation warning on the runners. `v4` and `v5` both run on `node20`; `v6` is the earliest Node 24 major. No input changes — `v7`'s new `archive` input defaults to `true`, preserving the existing upload of `build/libs`.
+- Pin every GitHub Action to a full-length commit SHA with the release as a trailing comment, replacing the previous mix of floating major tags and one SHA pin. No behaviour change: each floating tag already resolved to the commit now pinned. Rationale and the SHA-resolution procedure are in `AGENTS.md` under "Key Conventions".
+- Add `.github/dependabot.yml` enabling Dependabot version updates for `github-actions` (weekly, grouped into one PR), which is what keeps the SHA pins from going stale. `npm` and `gradle` are intentionally excluded.
 - De-hardcode the nightly workflow artifact name; it now resolves the project version at runtime via `./gradlew -q printVersion`.
 - Migrate the nightly release step from the unmaintained `djnicholson/release-action@v2.11` (no release since 2020) to `softprops/action-gh-release`, pinned to the `v3.0.0` commit SHA for supply-chain reproducibility and marked `prerelease`.
 - Upload the nightly JAR under a static, version-independent `spring-boot-kisses-angular-nightly.jar` (discovered dynamically, excluding the `-plain.jar`) so repeated runs against the fixed `nightly` tag cleanly replace the single artifact instead of accumulating stale version-named JARs; the build version is surfaced in the release body instead.
