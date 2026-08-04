@@ -45,7 +45,7 @@ verify:
 ng-build:
     ./gradlew ngBuild
 
-# Update Angular packages (currently targets @21)
+# Update Angular packages (currently targets @22)
 ng-update:
     ./gradlew ngUpdate
 
