@@ -73,6 +73,12 @@ Check the wrapper version against the latest release at `https://gradle.org/rele
 ./gradlew wrapper --gradle-version <new-version>
 ```
 
+Run it **twice** — the first invocation updates `gradle-wrapper.properties`, the second regenerates the `gradlew` / `gradlew.bat` scripts.
+
+**Standing post-step:** the wrapper task rewrites `retries=0` in `gradle-wrapper.properties` on every regeneration (a Gradle 9.5+ default).
+Restore the project's chosen `retries=3` after every wrapper bump, otherwise the distribution download fails fast on transient CI network errors.
+Leave the regenerated `gradlew` / `gradlew.bat` churn as-is — it is canonical output, and reverting it diverges from the official scripts.
+
 Then rebuild to verify compatibility.
 
 ### Gradle plugins
@@ -85,7 +91,7 @@ Review each link and bump the version number as needed:
 | `org.springframework.boot`        | 4.1.0           | https://plugins.gradle.org/plugin/org.springframework.boot        |
 | `io.spring.dependency-management` | 1.1.7           | https://plugins.gradle.org/plugin/io.spring.dependency-management |
 | `com.github.node-gradle.node`     | 7.1.0           | https://plugins.gradle.org/plugin/com.github.node-gradle.node     |
-| `com.google.cloud.tools.jib`      | 3.5.3           | https://plugins.gradle.org/plugin/com.google.cloud.tools.jib      |
+| `com.google.cloud.tools.jib`      | 3.5.4           | https://plugins.gradle.org/plugin/com.google.cloud.tools.jib      |
 | `org.owasp.dependencycheck`       | 12.2.2          | https://plugins.gradle.org/plugin/org.owasp.dependencycheck       |
 
 ### npm audit
@@ -186,13 +192,15 @@ Two workflows are configured in `.github/workflows/`:
 
 **On push / PR** (`gradle-on-push-build-actions.yml`):
 - Triggers on push to `main` and on pull requests.
-- Sets up JDK 21 (Temurin), configures Gradle via `gradle/actions/setup-gradle@v4`, runs `./gradlew build`.
+- Sets up JDK 21 (Temurin) via `actions/setup-java`, configures Gradle via `gradle/actions/setup-gradle`, runs `./gradlew build`.
+- Every action is pinned to a full-length commit SHA with the release as a trailing comment; Dependabot bumps them weekly (see `.github/dependabot.yml`). The workflow files are the source of truth for the current pins — do not mirror version numbers here.
 - Uploads build artifacts to GitHub.
 
 **Nightly build** (`gradle-nightly-build-actions.yml`):
 - Runs at 2 AM UTC daily.
-- Builds and uploads a nightly release artifact tagged as `nightly` via `softprops/action-gh-release` (pinned to the `v3.0.0` commit SHA). A staging step renames the JAR to a static `spring-boot-kisses-angular-nightly.jar` so each run replaces the single artifact on the fixed `nightly` tag (no stale-asset accumulation); the build version appears in the release body.
-- Reads the project version at runtime via `./gradlew -q printVersion` and substitutes it into the artifact name (`spring-boot-kisses-angular-<version>-nightly.jar`).
+- Builds and uploads a nightly release artifact tagged as `nightly` via `softprops/action-gh-release` (SHA-pinned), marked `prerelease`.
+- A staging step discovers the bootable JAR dynamically (`find build/libs -maxdepth 1 -name '*.jar' ! -name '*-plain.jar'`) and copies it to a **static, version-independent** `spring-boot-kisses-angular-nightly.jar`. The static name is deliberate: `overwrite_files` only replaces an asset of the *same* name, so a version-stamped name would leave stale JARs accumulating on the fixed `nightly` tag every time the project version bumps.
+- Reads the project version at runtime via `./gradlew -q printVersion` and surfaces it in the release **body** (not the artifact name).
 
 ### What to verify after CI changes
 
