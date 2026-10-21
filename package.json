@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@angular/build": "22.1.2",
-    "@angular/cli": "22.1.2",
+    "@angular/cli": "22.2.3",
     "@angular/compiler-cli": "22.1.0",
     "jsdom": "29.1.1",
     "typescript": "6.0.3",
