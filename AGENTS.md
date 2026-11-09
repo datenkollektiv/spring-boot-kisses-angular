@@ -9,7 +9,7 @@ A minimal example integrating a **Spring Boot 4.1** backend (Java 21) with an
 **Angular 22** frontend, compiled into a single runnable JAR. The backend exposes
 one REST endpoint; the frontend displays the build version. Everything is built
 through Gradle — no local Node.js needed (the `com.github.node-gradle.node` plugin
-downloads Node 24.17.0).
+downloads Node 24.22.2).
 
 ## Architecture
 

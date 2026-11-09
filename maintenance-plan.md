@@ -44,11 +44,11 @@ Node.js 24.x is downloaded by Gradle -- no local Node installation required.
 ### Java / Spring Boot
 
 Authoritative versions live in `build.gradle` (plugins block).
-To bump Spring Boot, update the `org.springframework.boot` plugin version in `build.gradle` (currently `4.1.0`).
+To bump Spring Boot, update the `org.springframework.boot` plugin version in `build.gradle` (currently `4.1.2`).
 
 ### Node.js / Angular
 
-Node.js version is pinned in `build.gradle` under the `node` block (currently `24.17.0`).
+Node.js version is pinned in `build.gradle` under the `node` block (currently `24.22.2`).
 Angular is built through Gradle's `ngBuild` task using `@angular/cli`.
 
 To update Angular dependencies:
@@ -88,7 +88,7 @@ Review each link and bump the version number as needed:
 
 | Plugin                            | Current Version | Version Page                                                      |
 |-----------------------------------|-----------------|-------------------------------------------------------------------|
-| `org.springframework.boot`        | 4.1.0           | https://plugins.gradle.org/plugin/org.springframework.boot        |
+| `org.springframework.boot`        | 4.1.2           | https://plugins.gradle.org/plugin/org.springframework.boot        |
 | `io.spring.dependency-management` | 1.1.7           | https://plugins.gradle.org/plugin/io.spring.dependency-management |
 | `com.github.node-gradle.node`     | 7.1.0           | https://plugins.gradle.org/plugin/com.github.node-gradle.node     |
 | `com.google.cloud.tools.jib`      | 3.5.4           | https://plugins.gradle.org/plugin/com.google.cloud.tools.jib      |
